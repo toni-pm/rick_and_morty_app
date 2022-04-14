@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+const { app } = require('../app')
+const http = require('http')
+const logger = require('../log/logger.log')
+const { PORT } = require('../config/config')
+
+const server = http.createServer(app)
+server.listen(PORT)
+server.on('error', onError)
+
+/**
+   * Event listener for HTTP server "error" event.
+   */
+function onError (error) {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      logger.error(PORT + ' requires elevated privileges')
+      process.exit(1)
+    case 'EADDRINUSE':
+      logger.error(PORT + ' is already in use')
+      process.exit(1)
+    default:
+      throw error
+  }
+}
