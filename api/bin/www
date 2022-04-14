@@ -3,10 +3,37 @@ const { app } = require('../app')
 const http = require('http')
 const logger = require('../log/logger.log')
 const { PORT } = require('../config/config')
+const { getConnection, close } = require('../config/db')
 
 const server = http.createServer(app)
-server.listen(PORT)
+server.listen(PORT, async function () {
+  await getConnection()
+  logger.info(`Server listening on port ${PORT}!`)
+})
 server.on('error', onError)
+
+// Error handling
+process.on('uncaughtException', err => {
+  logger.fatal('------- Uncaught exception -------')
+  logger.fatal(err)
+  logger.fatal('----------------------------------')
+})
+
+process.on('unhandledRejection', err => {
+  logger.fatal('------ Unhandled Rejection ------')
+  logger.fatal(err)
+  logger.fatal('----------------------------------')
+})
+
+// Close connection on exit.
+process.on('SIGINT', function () {
+  close().then(() => {
+    server.close(function () {
+      logger.info('Closed connection!')
+      process.exit(0)
+    })
+  })
+})
 
 /**
    * Event listener for HTTP server "error" event.
@@ -28,3 +55,5 @@ function onError (error) {
       throw error
   }
 }
+
+module.exports = server

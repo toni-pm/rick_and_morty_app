@@ -10,8 +10,8 @@ expect.extend({
     return {
       pass,
       message: () => pass
-        ? `Expected not to have ${msg} validation error`
-        : `Expected to have ${msg} validation error`
+        ? `Expected not to have '${msg}' validation error`
+        : `Expected to have '${msg}' validation error`
     }
   }
 })

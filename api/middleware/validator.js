@@ -9,7 +9,7 @@ const validate = validations => {
       return next()
     }
 
-    const errArray = errors.array()
+    const errArray = errors.array({ onlyFirstError: true })
     const errStatus = errArray.find(err => Number.isInteger(err.msg))
     if (errStatus) {
       res.sendStatus(errStatus.msg)

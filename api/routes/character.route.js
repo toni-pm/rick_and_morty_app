@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const characterController = require('../controllers/character.controller')
 const { check } = require('express-validator')
+const characterController = require('../controllers/character.controller')
 const { validate } = require('../middleware/validator')
 const { MAX_PAGES } = require('../config/config')
 

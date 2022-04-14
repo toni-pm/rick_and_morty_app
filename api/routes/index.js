@@ -9,5 +9,5 @@ router.get('/', function (req, res, next) {
 module.exports = app => {
   app.use(API_PREFIX, router)
   app.use(`${API_PREFIX}/auth`, require('./auth.route'))
-  app.use(`${API_PREFIX}/characters`, require('./character.route'))
+  app.use(`${API_PREFIX}/character`, require('./character.route'))
 }
