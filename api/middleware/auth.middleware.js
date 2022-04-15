@@ -1,7 +1,7 @@
 const { TokenExpiredError } = require('jsonwebtoken')
 const { verifyToken } = require('../services/auth.service')
 
-const middleware = async (req, res, next) => {
+const authRequired = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization
     if (!authorization && !authorization.startsWith('Bearer ')) {
@@ -25,4 +25,15 @@ const middleware = async (req, res, next) => {
   return next()
 }
 
-module.exports = middleware
+const authOptional = (req, res, next) => {
+  const authorization = req.headers.authorization
+  if (authorization) {
+    return authRequired(req, res, next)
+  }
+  return next()
+}
+
+module.exports = {
+  authRequired,
+  authOptional
+}

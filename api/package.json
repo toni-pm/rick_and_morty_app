@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
-    "test": "jest --verbose --detectOpenHandles --forceExit api/_tests",
+    "test": "jest --verbose --detectOpenHandles --forceExit api/_tests/character.test.js",
     "lint": "yarn eslint ."
   },
   "dependencies": {

@@ -17,13 +17,16 @@ const validatePassword = () => {
 
 const validateNickname = () => {
   return [
-    check('nickname', 'Nickname must be between 4 and 16 characters.').notEmpty().trim().isLength({ min: NICKNAME_MIN, max: NICKNAME_MAX })
+    check('nickname', `Nickname must be between ${NICKNAME_MIN} and ${NICKNAME_MAX} characters.`).notEmpty().trim().isLength({ min: NICKNAME_MIN, max: NICKNAME_MAX })
       .matches(/^[a-zA-Z0-9^_-]+$/).withMessage('Nickname cannot contain special characters except - or _')
   ]
 }
 
 const validateUser = () => {
-  return [...validatePassword(), ...validateNickname()]
+  return [...validatePassword(), ...validateNickname(),
+    check('firstname').trim(),
+    check('lastname').trim()
+  ]
 }
 
 module.exports = {

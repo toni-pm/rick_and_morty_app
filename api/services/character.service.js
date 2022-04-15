@@ -15,13 +15,35 @@ const findAll = async (page = 1) => {
   return res.data
 }
 
-const findById = async id => {
-  const res = await axios.get(`${API}/character/${id}`)
-  return res.data
+const findById = async (characterId, user) => {
+  const res = await axios.get(`${API}/character/${characterId}`)
+  const data = res.data
+  if (data && user) {
+    data.fav = isFav(characterId, user)
+  } else {
+    data.fav = false
+  }
+  return data
+}
+
+const isFav = (characterId, user) => {
+  return user.favs.includes(characterId)
+}
+
+const addFav = async (characterId, user) => {
+  user.favs = user.favs.filter(item => item !== characterId).concat(characterId)
+  await user.save()
+}
+
+const deleteFav = async (characterId, user) => {
+  user.favs = user.favs.filter(item => item !== characterId)
+  await user.save()
 }
 
 module.exports = {
   getMaxPages,
   findAll,
-  findById
+  findById,
+  addFav,
+  deleteFav
 }

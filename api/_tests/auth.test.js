@@ -18,11 +18,42 @@ afterAll(() => {
   server.close()
 })
 
-const passwordPolicyTest = apiReq => {
+const passwordAndNicknamePolicyTests = apiReq => {
   const passwordPolicyMsg = 'Password must be between 16 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.'
+
+  test('Nickname cannot contain symbols other than - or _', async () => {
+    const user = {
+      nickname: 'nickname\'',
+      password: 'Testing1234567890123!'
+    }
+
+    const response = await api
+      .post(`${API_PREFIX}/auth/${apiReq}`)
+      .set('Accept', 'application/json')
+      .send(user)
+      .expect('Content-Type', /application\/json/)
+      .expect(400)
+    expect(response).toBeValidationError('Nickname cannot contain special characters except - or _')
+  })
+
   test('Nickname must have at least 4 characters.', async () => {
     const user = {
       nickname: 'ton',
+      password: 'Testing1234567890123!'
+    }
+
+    const response = await api
+      .post(`${API_PREFIX}/auth/${apiReq}`)
+      .set('Accept', 'application/json')
+      .send(user)
+      .expect('Content-Type', /application\/json/)
+      .expect(400)
+    expect(response).toBeValidationError('Nickname must be between 4 and 16 characters.')
+  })
+
+  test('Nickname must have at most 16 characters.', async () => {
+    const user = {
+      nickname: 'invalid_nickname_at_most_16',
       password: 'Testing1234567890123!'
     }
 
@@ -156,7 +187,7 @@ describe('Login', () => {
     expect(response.body.message).toBe('Invalid credentials.')
   })
 
-  passwordPolicyTest('login')
+  passwordAndNicknamePolicyTests('login')
 })
 
 describe('Register', () => {
@@ -172,5 +203,5 @@ describe('Register', () => {
     expect(response.body.message).toBe('User already exists.')
   })
 
-  passwordPolicyTest('register')
+  passwordAndNicknamePolicyTests('register')
 })

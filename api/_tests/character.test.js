@@ -1,4 +1,12 @@
-const { api, API_PREFIX } = require('./jest.helpers')
+const moongose = require('mongoose')
+const server = require('../bin/www')
+const { api, API_PREFIX, testToken } = require('./jest.helpers')
+
+let authToken = ''
+
+beforeAll(async () => {
+  authToken = await testToken()
+})
 
 describe('Character list', () => {
   test('It should display the first page of 20 characters', async () => {
@@ -67,4 +75,68 @@ describe('Character details', () => {
       .expect(400)
     expect(response).toBeValidationError('Invalid character.')
   })
+})
+
+describe('Favorite characters', () => {
+  test('Unauthorized | Add to favorites', async () => {
+    const id = 1
+    await api
+      .get(`${API_PREFIX}/character/fav/${id}`)
+      .expect(401)
+  })
+
+  test('Unauthorized | Delete from favorites', async () => {
+    const id = 1
+    await api
+      .delete(`${API_PREFIX}/character/fav/${id}`)
+      .expect(401)
+  })
+
+  test('Character should be added to the favorites list', async () => {
+    const id = 1
+    let response = await api
+      .get(`${API_PREFIX}/character/fav/${id}`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+    expect(response.body.message).toBe('Character added to favorites.')
+
+    response = await api
+      .get(`${API_PREFIX}/character/${id}`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+    expect(response.body.fav).toBe(true)
+  })
+
+  test('Character should be deleted from the favorites list', async () => {
+    const id = 1
+    let response = await api
+      .delete(`${API_PREFIX}/character/fav/${id}`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+    expect(response.body.message).toBe('Character removed from favorites.')
+
+    response = await api
+      .get(`${API_PREFIX}/character/${id}`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+    expect(response.body.fav).toBe(false)
+  })
+
+  test('Character that does not exist cannot be added to favorites', async () => {
+    const id = 999
+    await api
+      .get(`${API_PREFIX}/character/fav/${id}`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(404)
+  })
+})
+
+afterAll(() => {
+  moongose.connection.close()
+  server.close()
 })
