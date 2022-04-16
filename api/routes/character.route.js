@@ -8,6 +8,7 @@ const { MAX_PAGES } = require('../config/config')
 
 /* GET Character list. */
 router.get('/',
+  authOptional,
   validate([
     check('page')
       .custom(async (value, { req }) => {

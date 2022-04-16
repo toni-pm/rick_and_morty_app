@@ -5,7 +5,7 @@ const characterService = require('../services/character.service')
 const findAll = async (req, res, next) => {
   const { page } = req.query
   try {
-    return res.send(await characterService.findAll(page))
+    return res.send(await characterService.findAll(page, req.user))
   } catch (err) {
     return next(new ErrorHandler(500, 'Error finding characters.', err))
   }

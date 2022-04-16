@@ -15,6 +15,16 @@ const validatePassword = () => {
   ]
 }
 
+const validatePasswordConfirmation = () => {
+  return [
+    check('password_confirmation', 'Passwords do not match.')
+      .exists()
+      .custom((value, { req }) => {
+        return value === req.body.password
+      })
+  ]
+}
+
 const validateNickname = () => {
   return [
     check('nickname', `Nickname must be between ${NICKNAME_MIN} and ${NICKNAME_MAX} characters.`).notEmpty().trim().isLength({ min: NICKNAME_MIN, max: NICKNAME_MAX })
@@ -32,5 +42,6 @@ const validateUser = () => {
 module.exports = {
   NICKNAME_MIN,
   NICKNAME_MAX,
-  validateUser
+  validateUser,
+  validatePasswordConfirmation
 }

@@ -26,6 +26,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
       nickname: 'nickname\'',
       password: 'Testing1234567890123!'
     }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
+    }
 
     const response = await api
       .post(`${API_PREFIX}/auth/${apiReq}`)
@@ -40,6 +43,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
     const user = {
       nickname: 'ton',
       password: 'Testing1234567890123!'
+    }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
     }
 
     const response = await api
@@ -56,6 +62,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
       nickname: 'invalid_nickname_at_most_16',
       password: 'Testing1234567890123!'
     }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
+    }
 
     const response = await api
       .post(`${API_PREFIX}/auth/${apiReq}`)
@@ -70,6 +79,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
     const user = {
       nickname: 'tonipm_password_at_least_16_characters',
       password: 'T1#sting'
+    }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
     }
 
     const response = await api
@@ -86,6 +98,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
       nickname: 'tonipm_password_at_most_99_characters',
       password: 'T1#sting12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012'
     }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
+    }
 
     const response = await api
       .post(`${API_PREFIX}/auth/${apiReq}`)
@@ -100,6 +115,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
     const user = {
       nickname: 'tonipm_password_at_least_1_number',
       password: '##Supersecurepassword'
+    }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
     }
 
     const response = await api
@@ -116,6 +134,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
       nickname: 'tonipm_password_at_least_1_symbol',
       password: 'Supersecurepassword1234'
     }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
+    }
 
     const response = await api
       .post(`${API_PREFIX}/auth/${apiReq}`)
@@ -131,6 +152,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
       nickname: 'tonipm_password_at_least_1_capital_letter',
       password: '###supersecurepassword1234'
     }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
+    }
 
     const response = await api
       .post(`${API_PREFIX}/auth/${apiReq}`)
@@ -145,6 +169,9 @@ const passwordAndNicknamePolicyTests = apiReq => {
     const user = {
       nickname: 'tonipm_password_at_least_1_lower_letter',
       password: '###SUPERSECUREPASSWORD1234'
+    }
+    if (apiReq === 'register') {
+      user.password_confirmation = user.password
     }
 
     const response = await api
@@ -193,6 +220,7 @@ describe('Login', () => {
 describe('Register', () => {
   test('Nickname already exist', async () => {
     const user = initialUsers[0]
+    user.password_confirmation = user.password
 
     const response = await api
       .post(`${API_PREFIX}/auth/register`)
@@ -201,6 +229,22 @@ describe('Register', () => {
       .expect('Content-Type', /application\/json/)
       .expect(400)
     expect(response.body.message).toBe('User already exists.')
+  })
+
+  test('Passwords do not match', async () => {
+    const user = {
+      nickname: 'passwd_not_match',
+      password: '1Very$$$ecurePassword6'
+    }
+    user.password_confirmation = user.password + 'diff'
+
+    const response = await api
+      .post(`${API_PREFIX}/auth/register`)
+      .set('Accept', 'application/json')
+      .send(user)
+      .expect('Content-Type', /application\/json/)
+      .expect(400)
+    expect(response).toBeValidationError('Passwords do not match.')
   })
 
   passwordAndNicknamePolicyTests('register')

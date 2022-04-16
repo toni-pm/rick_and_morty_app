@@ -10,15 +10,25 @@ const getMaxPages = async () => {
   return pages
 }
 
-const findAll = async (page = 1) => {
+const findAll = async (page = 1, user) => {
   const res = await axios.get(`${API}/character/?page=${page}`)
-  return res.data
+  const data = res.data
+
+  // Check favorite characters
+  if (user && data && data.results) {
+    data.results.forEach(character => {
+      character.fav = isFav(character.id, user)
+    })
+  }
+  return data
 }
 
 const findById = async (characterId, user) => {
   const res = await axios.get(`${API}/character/${characterId}`)
   const data = res.data
-  if (data && user) {
+
+  // Check if character is favorite
+  if (user && data) {
     data.fav = isFav(characterId, user)
   } else {
     data.fav = false
