@@ -6,7 +6,7 @@ const login = async (req, res, next) => {
     const { nickname, password } = req.body
     const token = await authService.login(nickname, password)
     if (token) {
-      return res.send({ token: `Bearer ${token}` })
+      return res.send({ nickname, token: `Bearer ${token}` })
     }
     return res.status(403).send({ message: 'Invalid credentials.' })
   } catch (err) {

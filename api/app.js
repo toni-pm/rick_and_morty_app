@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const { handleError, ErrorHandler } = require('./config/error')
 const { NODE_ENV } = require('./config/config')
 
 // App conf
 const app = express()
+app.use(cors())
 app.use(express.json({ limit: '5mb' }))
 
 if (NODE_ENV === 'development') {
