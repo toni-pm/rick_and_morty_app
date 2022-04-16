@@ -1,13 +1,40 @@
-const apiUrl = 'http://localhost:8000/api/character'
+import api from '../services/api'
 
-export const getCharactersByPage = async (page = 1) => {
-  const response = await fetch(`${apiUrl}?page=${page}`)
-  const data = await response.json()
-  return data.results
+const baseUrl = 'character'
+
+const getCharactersByPage = async (page = 1) => {
+  return api.get(`${baseUrl}?page=${page}`)
+    .then(data => {
+      return data
+    })
 }
 
-export const getCharacterDetails = async id => {
-  const response = await fetch(`${apiUrl}/${id}`)
-  const data = await response.json()
-  return data
+const getCharacterDetails = async id => {
+  return api.get(`${baseUrl}/${id}`)
+    .then(data => {
+      return data
+    })
 }
+
+const addFavorite = async id => {
+  return api.get(`${baseUrl}/fav/${id}`)
+    .then(data => {
+      return data
+    })
+}
+
+const deleteFavorite = async id => {
+  return api.delet(`${baseUrl}/fav/${id}`)
+    .then(data => {
+      return data
+    })
+}
+
+const exportedObj = {
+  getCharactersByPage,
+  getCharacterDetails,
+  addFavorite,
+  deleteFavorite
+}
+
+export default exportedObj

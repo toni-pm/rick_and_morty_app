@@ -26,22 +26,43 @@ class ApiError extends Error {
 
 const handleErrors = res => {
   if (!res.ok) {
-    return res.json().then(json => {
-      console.error(json)
-      throw new ApiError(json)
-    })
+    if (res.status === 401) {
+      window.location.href = '/login'
+    } else {
+      return res.json().then(json => {
+        console.error(json)
+        throw new ApiError(json)
+      })
+    }
   }
   return res
 }
 
+const getUserStorage = () => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  return user
+}
+
+const getAccessToken = () => {
+  const user = getUserStorage()
+  return user ? user.token : null
+}
+
 const call = (url, method = 'GET', data) => {
-  return fetch(`${apiUrl}/${url}`, {
+  const config = {
     method: method,
     headers: {
       'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+    }
+  }
+  const authToken = getAccessToken()
+  if (authToken) {
+    config.headers.Authorization = getAccessToken()
+  }
+  if (method !== 'GET' && method !== 'DELETE') {
+    config.body = JSON.stringify(data)
+  }
+  return fetch(`${apiUrl}/${url}`, config)
     .then(handleErrors)
     .then(res => res.json())
 }
@@ -50,12 +71,18 @@ const get = async url => {
   return call(url, 'GET', null)
 }
 
+const delet = async url => {
+  return call(url, 'DELETE', null)
+}
+
 const post = async (url, data) => {
   return call(url, 'POST', data)
 }
 
 const exportedObj = {
+  getUserStorage,
   get,
+  delet,
   post
 }
 

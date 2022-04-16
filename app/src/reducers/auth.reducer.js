@@ -5,8 +5,9 @@ import {
   AUTH_REGISTER_SUCCESS,
   AUTH_REGISTER_FAIL
 } from '../actions/types'
+import api from '../services/api'
 
-const user = JSON.parse(localStorage.getItem('user'))
+const user = api.getUserStorage()
 
 const initialState = user
   ? { user }

@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Character from './Character'
 import Error from './Error'
 import Loader from './Loader'
-import { getCharacterDetails } from '../services/character.service'
+import { getCharacterDetails } from '../actions/character.actions'
 
 const CharacterDetails = () => {
   const { id } = useParams()
-  const [character, setCharacter] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const getCharacter = async () => {
-    try {
-      setCharacter(await getCharacterDetails(id))
-      setLoading(false)
-      setError(false)
-    } catch (err) {
-      setLoading(false)
-      setError(err)
-    }
+  const { characterDetails } = useSelector(state => state.character)
+
+  const dispatch = useDispatch()
+
+  const getCharacter = () => {
+    setLoading(true)
+    setError(false)
+
+    dispatch(getCharacterDetails(id))
+      .then(() => {
+        setLoading(false)
+        setError(false)
+      })
+      .catch(() => {
+        setLoading(false)
+        setError(true)
+      })
   }
 
   useEffect(() => {
@@ -34,7 +42,7 @@ loading
   ? (<Loader />)
   : error
     ? (<Error />)
-    : character ? (<Character data={character} />) : <></>
+    : characterDetails ? (<Character data={characterDetails} />) : <></>
 }
 </div>
   )

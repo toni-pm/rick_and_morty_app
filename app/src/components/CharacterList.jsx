@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Character from './Character'
 import Error from './Error'
 import Loader from './Loader'
-import { getCharactersByPage } from '../services/character.service'
-import { Link } from 'react-router-dom'
+import { getCharactersByPage } from '../actions/character.actions'
 
 const CharacterList = () => {
-  const [characters, setCharacters] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const getCharacters = async () => {
-    try {
-      setCharacters(await getCharactersByPage(1))
-      setLoading(false)
-      setError(false)
-    } catch (err) {
-      setLoading(false)
-      setError(err)
-    }
+  const { characters } = useSelector(state => state.character)
+
+  const dispatch = useDispatch()
+
+  const getCharacters = () => {
+    setLoading(true)
+    setError(false)
+
+    dispatch(getCharactersByPage())
+      .then(() => {
+        setLoading(false)
+        setError(false)
+      })
+      .catch(() => {
+        setLoading(false)
+        setError(true)
+      })
   }
 
   useEffect(() => {
@@ -32,7 +40,7 @@ loading
   ? (<Loader />)
   : error
     ? (<Error />)
-    : characters && characters.map(character => (
+    : characters && characters.results && characters.results.map(character => (
       <Link key={character.id} to={`/details/${character.id}`}>
         <Character data={character} />
       </Link>
