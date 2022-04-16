@@ -1,0 +1,7 @@
+export const AUTH_LOGIN_SUCCESS = '@auth/login_success'
+export const AUTH_LOGIN_FAIL = '@auth/login_fail'
+export const AUTH_LOGOUT = '@auth/logout'
+export const AUTH_REGISTER_SUCCESS = '@auth/register_success'
+export const AUTH_REGISTER_FAIL = '@auth/register_fail'
+export const MESSAGE_SET = '@message/set'
+export const MESSAGE_CLEAR = '@message/clear'
