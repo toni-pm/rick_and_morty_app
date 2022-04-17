@@ -3,6 +3,8 @@ export const AUTH_LOGIN_FAIL = '@auth/login_fail'
 export const AUTH_LOGOUT = '@auth/logout'
 export const AUTH_REGISTER_SUCCESS = '@auth/register_success'
 export const AUTH_REGISTER_FAIL = '@auth/register_fail'
+export const AUTH_CHECK_TOKEN_SUCCESS = '@auth/check_token_success'
+export const AUTH_CHECK_TOKEN_FAIL = '@auth/check_token_fail'
 
 export const CHARACTER_GET_BY_PAGE = '@character/get_by_page'
 export const CHARACTER_DETAILS = '@character/details'

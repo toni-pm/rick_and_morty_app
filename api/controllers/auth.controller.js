@@ -1,6 +1,10 @@
 const { ErrorHandler } = require('../config/error')
 const authService = require('../services/auth.service')
 
+const me = (req, res, next) => {
+  return res.send({ nickname: req.user.nickname, token: req.headers.authorization })
+}
+
 const login = async (req, res, next) => {
   try {
     const { nickname, password } = req.body
@@ -28,6 +32,7 @@ const register = async (req, res, next) => {
 }
 
 module.exports = {
+  me,
   login,
   register
 }
