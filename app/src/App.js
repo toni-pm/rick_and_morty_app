@@ -11,6 +11,7 @@ import CharacterDetails from './components/CharacterDetails'
 import Login from './components/Login'
 import Register from './components/Register'
 import Home from './components/Home'
+import Error404 from './components/Error404'
 import { getAccessToken } from './utils'
 import './App.css'
 
@@ -31,6 +32,7 @@ function App () {
 					<Route path='/details/:id' element={<CharacterDetails />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
+					<Route path="*" element={<Error404 />} />
 				</Routes>
 			</Router>
 		</div>
