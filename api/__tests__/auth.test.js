@@ -1,7 +1,7 @@
 const moongose = require('mongoose')
 const server = require('../bin/www')
 const User = require('../models/user.model')
-const { api, API_PREFIX, initialUsers } = require('./jest.helpers')
+const { api, API_PREFIX, initialUsers, testToken } = require('./jest.helpers')
 
 beforeAll(async () => {
   await User.deleteMany({})
@@ -248,4 +248,25 @@ describe('Register', () => {
   })
 
   passwordAndNicknamePolicyTests('register')
+})
+
+describe('Me | Check token', () => {
+  test('The access token is valid and should return the user information', async () => {
+    const authToken = await testToken()
+    const response = await api
+      .get(`${API_PREFIX}/auth/me`)
+      .set('Authorization', authToken)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+    expect(response.body).toHaveProperty('nickname')
+  })
+
+  test('An invalid access token should return a 401 error.', async () => {
+    const authToken = await testToken()
+    await api
+      .get(`${API_PREFIX}/auth/me`)
+      .set('Authorization', authToken + '_diff')
+      .expect('Content-Type', /application\/json/)
+      .expect(401)
+  })
 })
