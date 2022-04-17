@@ -4,7 +4,7 @@ import message from './message.reducer'
 import character from './character.reducer'
 
 export default combineReducers({
-  auth,
-  character,
-  message
+	auth,
+	character,
+	message
 })
