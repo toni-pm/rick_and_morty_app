@@ -38,7 +38,7 @@ const Details = () => {
 		<>
 			{
 				loading
-					? (<Loader />)
+					? (<Loader text={true} />)
 					: error
 						? (<Error />)
 						: characterDetails ? (<Character data={{ ...characterDetails, details: true }} />) : <></>

@@ -23,3 +23,38 @@
 		}
 	}
 }
+
+.loader-image {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.loader {
+		position: absolute;
+		color: var(--color-secondary);
+
+		.dot-pulse {
+			color: var(--color-secondary);
+		}
+
+		span {				
+			font-size: 4rem !important;
+		}
+	}
+
+	@media (max-width: 859px) {
+		height: 300px;
+	}
+}
+
+.character-details {
+	.loader-image {
+		width: 300px;
+		height: 304px;
+
+		span {				
+			font-size: 10rem !important;
+		}
+	}
+}
