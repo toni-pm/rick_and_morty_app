@@ -1,8 +1,11 @@
 import React from 'react'
 
 const Loader = () => (
-	<div>
-		<span>Loading...</span>
+	<div className='loader'>
+		<span>
+			Loading
+		</span>
+		<div className='dot-pulse'><span>.</span><span>.</span><span>.</span></div>
 	</div>
 )
 

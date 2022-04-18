@@ -36,7 +36,8 @@ const reducer = (state = initialState, action) => {
 		}
 	case AUTH_REGISTER_SUCCESS:
 		return {
-			...state
+			...state,
+			user: payload.user
 		}
 	case AUTH_REGISTER_FAIL:
 		return {

@@ -20,7 +20,7 @@ class ApiError extends Error {
 		if (obj.errors) {
 			this.message = ''
 			this.obj.errors.forEach(err => {
-				self.message += '\n' + err.msg
+				self.message += '\n\n' + err.msg
 			})
 		}
 	}

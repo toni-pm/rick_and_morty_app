@@ -1,0 +1,5 @@
+import './App.scss'
+import './variables.scss'
+import './effects.scss'
+import './Loader.scss'
+import './Character.scss'

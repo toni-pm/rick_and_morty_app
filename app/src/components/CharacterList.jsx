@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import Character from './Character'
 import Error from './Error'
 import Loader from './Loader'
@@ -42,9 +41,9 @@ const CharacterList = () => {
 
 	const pagination = () => {
 		return (
-			<div>
-				<button onClick={() => getCharacters(currentPage - 1)}>Previous</button>
-				<span>
+			<div className='character-pagination'>
+				<button className='btn-prev' onClick={() => getCharacters(currentPage - 1)}>Previous</button>
+				<span className='current'>
 					<select value={currentPage} onChange={e => getCharacters(e.target.value)}>
 						{
 							Array.from({ length: characters.info.pages }, (v, k) => k + 1).map(index =>
@@ -54,8 +53,8 @@ const CharacterList = () => {
 					</select>
 					&nbsp; / {characters.info.pages}
 				</span>
-				<button onClick={() => getCharacters(currentPage + 1)}>Next</button>
-				<span>{characters.info.count} results</span>
+				<button className='btn-next' onClick={() => getCharacters(currentPage + 1)}>Next</button>
+				<span className='results'>{characters.info.count} results</span>
 			</div>
 		)
 	}
@@ -68,15 +67,13 @@ const CharacterList = () => {
 					: error
 						? (<Error />)
 						: characters && characters.results && (
-							<div>
+							<div className='characters-wrapper'>
 								{pagination()}
 								{
-									<div>
+									<div className='characters'>
 										{
 											characters.results.map(character => (
-												<Link key={character.id} to={`/details/${character.id}`}>
-													<Character data={character} />
-												</Link>
+												<Character data={character} key={character.id} />
 											))
 										}
 									</div>
