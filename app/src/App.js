@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import { checkToken } from './actions/auth.actions'
 import { clearMessage } from './actions/message.actions'
-import Details from './components/Details'
+import CharacterDetails from './components/CharacterDetails'
 import Login from './components/Login'
 import Register from './components/Register'
 import Home from './components/Home'
@@ -59,7 +59,7 @@ function App () {
 				<section>
 					<Routes>
 						<Route path='/' element={<Home />} />
-						<Route path='/details/:id' element={<Details />} />
+						<Route path='/details/:id' element={<CharacterDetails />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/register' element={<Register />} />
 						<Route path='/error' element={<Error />} />

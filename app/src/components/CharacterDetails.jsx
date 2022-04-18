@@ -1,79 +1,50 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import propTypes from 'prop-types'
-import { addFavorite, deleteFavorite } from '../actions/character.actions'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import Character from './Character'
+import Error from './Error'
+import Loader from './Loader'
+import { getCharacterDetails } from '../actions/character.actions'
 
-const CharacterDetails = props => {
-	const { data } = props
-	const {
-		id,
-		name,
-		status,
-		species,
-		location,
-		fav,
-		image,
-		episode,
-		gender,
-		origin,
-		type
-	} = data
+const Details = () => {
+	const { id } = useParams()
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(false)
+
+	const { characterDetails } = useSelector(state => state.character)
 
 	const dispatch = useDispatch()
 
-	const addFav = e => {
-		e.preventDefault()
-		dispatch(addFavorite(id))
+	const getCharacter = () => {
+		setLoading(true)
+		setError(false)
+
+		dispatch(getCharacterDetails(id))
+			.then(() => {
+				setLoading(false)
+				setError(false)
+			})
+			.catch(() => {
+				setLoading(false)
+				setError(true)
+			})
 	}
 
-	const deleteFav = e => {
-		e.preventDefault()
-		dispatch(deleteFavorite(id))
-	}
+	useEffect(() => {
+		getCharacter()
+	}, [])
 
 	return (
-		<div className='character-details'>
-			<div className='character'>
-				<div className='character-image'>
-					<img src={image} alt='Character' />
-					<div className='favorite'>
-						<span className={fav ? 'is-fav' : 'no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
-					</div>
-				</div>
-				<div className='character-info'>
-					<h2>{name}</h2>
-
-					<span>Status:</span>
-					<p className='status'>{status}</p>
-
-					<span>Species:</span>
-					<p className='species'>{species}</p>
-
-					<span>Origin:</span>
-					<p className='origin'>{origin.name}</p>
-
-					<span>Last known location:</span>
-					<p className='location'>{location.name}</p>
-
-					<span>Gender:</span>
-					<p className='gender'>{gender}</p>
-
-					{type && (
-						<>
-							<span>Type:</span>
-							<p className='type'>{type}</p>
-						</>
-					)}
-					<span>Episodes:</span>
-					<p className='episodes'>{episode.length}</p>
-				</div>
-			</div>
-		</div>
+		<>
+			{
+				loading
+					? (<Loader />)
+					: error
+						? (<Error />)
+						: characterDetails ? (<Character data={{ ...characterDetails, details: true }} />) : <></>
+			}
+		</>
 	)
 }
 
-CharacterDetails.propTypes = {
-	data: propTypes.object
-}
-
-export default CharacterDetails
+export default Details
