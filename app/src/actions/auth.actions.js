@@ -44,6 +44,11 @@ export const register = ({ nickname, firstname, lastname, password, passwordConf
 				payload: { user: data }
 			})
 
+			dispatch({
+				type: MESSAGE_SET,
+				payload: data.message
+			})
+
 			return Promise.resolve()
 		},
 		err => {

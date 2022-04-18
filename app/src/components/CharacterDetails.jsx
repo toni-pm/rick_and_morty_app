@@ -6,7 +6,7 @@ import Error from './Error'
 import Loader from './Loader'
 import { getCharacterDetails } from '../actions/character.actions'
 
-const CharacterDetails = () => {
+const Details = () => {
 	const { id } = useParams()
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(false)
@@ -35,17 +35,16 @@ const CharacterDetails = () => {
 	}, [])
 
 	return (
-		<div>
-			<h1>Character Details {id}</h1>
+		<>
 			{
 				loading
 					? (<Loader />)
 					: error
 						? (<Error />)
-						: characterDetails ? (<Character data={characterDetails} />) : <></>
+						: characterDetails ? (<Character data={{ ...characterDetails, details: true }} />) : <></>
 			}
-		</div>
+		</>
 	)
 }
 
-export default CharacterDetails
+export default Details

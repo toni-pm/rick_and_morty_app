@@ -1,0 +1,79 @@
+.error {
+	font-family: Ubuntu, sans-serif;
+	margin: auto 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.error-code {
+		font-size: var(--fs-error-404-code);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		font-weight: 900;
+		color: var(--color-white);
+		width: 100%;
+
+		img {			
+			animation: rotateIn 0.8s ease-out;
+		}
+
+		&.error-404 {
+
+			span {
+				margin: 0 -140px;
+			}
+
+			img {
+				z-index: 2;
+				max-width: 500px;
+			}
+		}
+
+		&:not(.error-404) {
+			img {
+				max-width: 260px;
+				margin-bottom: 20px;
+			}
+		}
+	}
+
+	.error-message {
+		padding: 10px;
+
+		p {
+			font-size: var(--fs-2xl);
+			text-align: center;
+			font-weight: 400;
+			color: var(--color-white);
+			margin-top: 0;
+		}
+	
+		.error-control {
+			color: var(--color-white);
+			font-weight: 600;
+			font-size: var(--fs-3xl);
+
+			span {
+				margin: 30px;
+			}
+		}
+	}
+	
+	@media (max-width: 768px) {
+		
+		.error-code {
+			font-size: 30vw;
+			margin-bottom: 10vw;
+
+			span {
+				margin: 0 -10vw !important;
+			}
+
+			img {				
+				width: 40%;
+			}
+		}
+	}
+}

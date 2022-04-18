@@ -7,3 +7,7 @@ export const getAccessToken = () => {
 	const user = getUserStorage()
 	return user ? user.token : null
 }
+
+export const randomIntBetweenTwo = (min, max) => {
+	return Math.floor(Math.random() * (max - min + 1) + min)
+}

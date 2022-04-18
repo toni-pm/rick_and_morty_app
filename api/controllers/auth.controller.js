@@ -22,7 +22,8 @@ const register = async (req, res, next) => {
   try {
     const { nickname, firstname, lastname, password } = req.body
     await authService.register({ nickname, firstname, lastname, password })
-    return res.status(200).send({ message: 'Successfully registered.' })
+    const token = await authService.login(nickname, password)
+    return res.send({ nickname, token: `Bearer ${token}` })
   } catch (err) {
     if (err.name === 'MongoServerError' && err.code === 11000) {
       return next(new ErrorHandler(400, 'User already exists.'))
