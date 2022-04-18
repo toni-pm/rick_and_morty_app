@@ -6,7 +6,7 @@ const validatePassword = () => {
   return [
     check('password', 'Password must be between 16 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.')
       .notEmpty().isStrongPassword({
-        minLength: 16,
+        minLength: 8,
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
