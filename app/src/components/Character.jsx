@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { addFavorite, deleteFavorite } from '../actions/character.actions'
+import CharacterImage from './CharacterImage'
 
 const Character = props => {
 	const { data } = props
@@ -38,7 +39,7 @@ const Character = props => {
 			<div className='character-details'>
 				<div className='character'>
 					<div className='character-image'>
-						<img src={image} alt='Character' />
+						<CharacterImage url={image} />
 						<div className='favorite'>
 							<span className={fav ? 'is-fav' : 'no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
 						</div>
@@ -79,7 +80,7 @@ const Character = props => {
 		<div className='character'>
 			<div className='character-image'>
 				<Link key={id} to={`/details/${id}`}>
-					<img src={image} alt='Character' />
+					<CharacterImage url={image} />
 				</Link>
 			</div>
 			<div className='character-info'>

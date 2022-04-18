@@ -63,7 +63,7 @@ const CharacterList = () => {
 		<div>
 			{
 				loading
-					? (<Loader />)
+					? (<Loader text={true} />)
 					: error
 						? (<Error />)
 						: characters && characters.results && (
