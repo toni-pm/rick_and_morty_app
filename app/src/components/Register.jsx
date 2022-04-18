@@ -5,11 +5,11 @@ import { register } from '../actions/auth.actions'
 
 const Register = () => {
 	const [error, setError] = useState(null)
-	const [nickname, setNickname] = useState()
-	const [firstname, setFirstname] = useState()
-	const [lastname, setLastname] = useState()
-	const [password, setPassword] = useState()
-	const [passwordConfirmation, setPasswordConfirmation] = useState()
+	const [nickname, setNickname] = useState('')
+	const [firstname, setFirstname] = useState('')
+	const [lastname, setLastname] = useState('')
+	const [password, setPassword] = useState('')
+	const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
 	const { user } = useSelector(state => state.auth)
 	const { message } = useSelector(state => state.message)

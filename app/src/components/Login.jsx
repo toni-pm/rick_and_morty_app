@@ -5,8 +5,8 @@ import { Link, Navigate } from 'react-router-dom'
 
 const Login = () => {
 	const [error, setError] = useState(null)
-	const [nickname, setNickname] = useState()
-	const [password, setPassword] = useState()
+	const [nickname, setNickname] = useState('')
+	const [password, setPassword] = useState('')
 
 	const { user } = useSelector(state => state.auth)
 	const { message } = useSelector(state => state.message)
