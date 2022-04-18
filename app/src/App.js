@@ -14,8 +14,9 @@ import Register from './components/Register'
 import Home from './components/Home'
 import Error404 from './components/Error404'
 import Error from './components/Error'
-import { getAccessToken } from './utils'
+import { getAccessToken, randomIntBetweenTwo } from './utils'
 import './assets/styles'
+import audioRick from './assets/audio/rick.mp3'
 
 function App () {
 	const location = useLocation()
@@ -23,12 +24,25 @@ function App () {
 	const dispatch = useDispatch()
 	const { message } = useSelector(state => state.message)
 
+	/**
+	 * Function that sometimes plays a Rick sound.
+	 */
+	const rickSound = () => {
+		const random = randomIntBetweenTwo(1, 7)
+		if (random === 5) {
+			new Audio(audioRick).play()
+		}
+	}
+
 	useEffect(() => {
-		// If the client already has a token we check if it is still valid
+		// If the client already has a token we check if it is still valid.
 		if (getAccessToken()) {
 			dispatch(checkToken())
 		}
-	})
+
+		// When clicked it might play a Rick sound.
+		document.body.addEventListener('click', rickSound)
+	}, [])
 
 	useEffect(() => {
 		// Clear message when navigating.
