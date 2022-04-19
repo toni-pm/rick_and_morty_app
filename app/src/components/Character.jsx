@@ -41,7 +41,7 @@ const Character = props => {
 					<div className='character-image'>
 						<CharacterImage url={image} />
 						<div className='favorite'>
-							<span className={fav ? 'is-fav' : 'no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
+							<span className={fav ? 'favorite-star is-fav' : 'favorite-star no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
 						</div>
 					</div>
 					<div className='character-info'>
@@ -91,7 +91,7 @@ const Character = props => {
 				<span>Last known location:</span>
 				<p className='location'>{location.name}</p>
 				<div className='favorite'>
-					<span className={fav ? 'is-fav' : 'no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
+					<span className={fav ? 'favorite-star is-fav' : 'favorite-star no-fav'} onClick={fav ? deleteFav : addFav}>★</span>
 				</div>
 			</div>
 		</div>

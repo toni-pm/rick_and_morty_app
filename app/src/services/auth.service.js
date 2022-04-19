@@ -14,6 +14,12 @@ const login = async (nickname, password) => {
 
 const register = async ({ nickname, firstname, lastname, password, passwordConfirmation }) => {
 	return api.post(`${baseUrl}/register`, { nickname, firstname, lastname, password, password_confirmation: passwordConfirmation })
+		.then(data => {
+			if (data.token) {
+				localStorage.setItem('user', JSON.stringify(data))
+			}
+			return data
+		})
 }
 
 const logout = () => {

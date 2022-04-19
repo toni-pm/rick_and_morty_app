@@ -29,7 +29,6 @@ class ApiError extends Error {
 const handleErrors = res => {
 	if (!res.ok) {
 		return res.json().then(json => {
-			console.error(json)
 			if (res.status === 401 && !res.url.endsWith('/auth/me')) {
 				window.location.href = '/login'
 			}
