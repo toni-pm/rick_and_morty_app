@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -24,15 +24,15 @@ const Character = props => {
 
 	const dispatch = useDispatch()
 
-	const addFav = e => {
+	const addFav = useCallback(e => {
 		e.preventDefault()
 		dispatch(addFavorite(id))
-	}
+	}, [id])
 
-	const deleteFav = e => {
+	const deleteFav = useCallback(e => {
 		e.preventDefault()
 		dispatch(deleteFavorite(id))
-	}
+	}, [id])
 
 	if (details) {
 		return (
@@ -102,4 +102,4 @@ Character.propTypes = {
 	data: propTypes.object
 }
 
-export default Character
+export default React.memo(Character)
