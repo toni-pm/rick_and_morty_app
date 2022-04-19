@@ -16,13 +16,15 @@ const Login = () => {
 	const handleLogin = async e => {
 		e.preventDefault()
 
-		dispatch(login(nickname, password))
-			.then(() => {
-				setError(false)
-			})
-			.catch(() => {
-				setError(true)
-			})
+		if (nickname && password) {
+			dispatch(login(nickname, password))
+				.then(() => {
+					setError(false)
+				})
+				.catch(() => {
+					setError(true)
+				})
+		}
 	}
 
 	if (user) {

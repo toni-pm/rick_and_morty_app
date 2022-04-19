@@ -19,13 +19,15 @@ const Register = () => {
 	const handleRegister = async e => {
 		e.preventDefault()
 
-		dispatch(register({ nickname, firstname, lastname, password, passwordConfirmation }))
-			.then(() => {
-				setError(false)
-			})
-			.catch(() => {
-				setError(true)
-			})
+		if (nickname && password && passwordConfirmation) {
+			dispatch(register({ nickname, firstname, lastname, password, passwordConfirmation }))
+				.then(() => {
+					setError(false)
+				})
+				.catch(() => {
+					setError(true)
+				})
+		}
 	}
 
 	if (user) {
