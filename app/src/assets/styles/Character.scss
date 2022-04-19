@@ -104,7 +104,10 @@
 
 .character-details {
 
-	width: 80%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 	margin: 50px auto;
 	
 	.character {
@@ -161,11 +164,17 @@
 	}
 	
 	@media (min-width: 860px) {
+		padding: 0 50px;
+
 		.character {
 			flex-direction: row;
 
 			.character-info {
 				margin-left: 30px;
+
+				h2 {
+					width: 100%;
+				}
 			}
 		}
 	}
@@ -203,10 +212,31 @@
 
 	button {
 		padding: 12px 25px;
+
+		.btn-prev-xs {
+			display: none;
+		}
 	}
 
 	select {
 		padding: 10px;
 		border-radius: 6px;
+	}
+	
+	@media (max-width: 500px) {
+
+		button {
+			span {
+				display: none;
+
+				&.btn-prev-xs {
+					display: block;
+				}
+			}
+		}
+
+		.results {
+			display: block;
+		}
 	}
 }

@@ -42,7 +42,10 @@ const CharacterList = () => {
 	const pagination = () => {
 		return (
 			<div className='character-pagination'>
-				<button className='btn-prev' onClick={() => getCharacters(currentPage - 1)}>Previous</button>
+				<button className='btn-prev' onClick={() => getCharacters(currentPage - 1)}>
+					<span>Previous</span>
+					<span className='btn-prev-xs'>{'<'}</span>
+				</button>
 				<span className='current'>
 					<select value={currentPage} onChange={e => getCharacters(e.target.value)}>
 						{
@@ -53,7 +56,10 @@ const CharacterList = () => {
 					</select>
 					&nbsp; / {characters.info.pages}
 				</span>
-				<button className='btn-next' onClick={() => getCharacters(currentPage + 1)}>Next</button>
+				<button className='btn-next' onClick={() => getCharacters(currentPage + 1)}>
+					<span>Next</span>
+					<span className='btn-prev-xs'>{'>'}</span>
+				</button>
 				<span className='results'>{characters.info.count} results</span>
 			</div>
 		)
