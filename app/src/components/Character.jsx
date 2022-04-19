@@ -102,4 +102,4 @@ Character.propTypes = {
 	data: propTypes.object
 }
 
-export default React.memo(Character)
+export default Character

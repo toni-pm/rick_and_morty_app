@@ -5,7 +5,7 @@ import {
 	CHARACTER_DELETE_FAVORITE
 } from '../actions/types'
 
-const initialState = { characters: [], characterDetails: {}, currentPage: 1 }
+const initialState = { characters: {}, characterDetails: {}, currentPage: 1 }
 
 const reducer = (state = initialState, action) => {
 	const { type, payload } = action
@@ -23,34 +23,42 @@ const reducer = (state = initialState, action) => {
 			characterDetails: payload.characterDetails
 		}
 	case CHARACTER_ADD_FAVORITE:
-		if (state.characters && state.characters.results) {
-			state.characters.results.map(item => {
-				if (item.id === payload.id) {
-					item.fav = true
-				}
-				return item
-			})
-		}
-		if (state.characterDetails && state.characterDetails.id === payload.id) {
-			state.characterDetails.fav = true
-		}
 		return {
-			...state
+			...state,
+			characters: {
+				info: state.characters.info,
+				results: state.characters.results && state.characters.results.map(item => {
+					if (item.id === payload.id) {
+						item.fav = true
+					}
+					return item
+				})
+			},
+			characterDetails: state.characterDetails.id === payload.id
+				? {
+					...state.characterDetails,
+					fav: state.characterDetails.id === payload.id
+				}
+				: state.characterDetails
 		}
 	case CHARACTER_DELETE_FAVORITE:
-		if (state.characters && state.characters.results) {
-			state.characters.results.map(item => {
-				if (item.id === payload.id) {
-					item.fav = false
-				}
-				return item
-			})
-		}
-		if (state.characterDetails && state.characterDetails.id === payload.id) {
-			state.characterDetails.fav = false
-		}
 		return {
-			...state
+			...state,
+			characters: {
+				info: state.characters.info,
+				results: state.characters.results && state.characters.results.map(item => {
+					if (item.id === payload.id) {
+						item.fav = false
+					}
+					return item
+				})
+			},
+			characterDetails: state.characterDetails.id === payload.id
+				? {
+					...state.characterDetails,
+					fav: false
+				}
+				: state.characterDetails
 		}
 	default:
 		return state
