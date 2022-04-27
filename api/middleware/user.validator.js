@@ -4,7 +4,7 @@ const NICKNAME_MAX = 16
 
 const validatePassword = () => {
   return [
-    check('password', 'Password must be between 16 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.')
+    check('password', 'Password must be between 8 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.')
       .notEmpty().isStrongPassword({
         minLength: 8,
         minLowercase: 1,

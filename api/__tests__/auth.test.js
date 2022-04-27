@@ -19,7 +19,7 @@ afterAll(() => {
 })
 
 const passwordAndNicknamePolicyTests = apiReq => {
-  const passwordPolicyMsg = 'Password must be between 16 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.'
+  const passwordPolicyMsg = 'Password must be between 8 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.'
 
   test('Nickname cannot contain symbols other than - or _', async () => {
     const user = {
@@ -75,10 +75,10 @@ const passwordAndNicknamePolicyTests = apiReq => {
     expect(response).toBeValidationError('Nickname must be between 4 and 16 characters.')
   })
 
-  test('Password must have at least 16 characters', async () => {
+  test('Password must have at least 8 characters', async () => {
     const user = {
-      nickname: 'tonipm_password_at_least_16_characters',
-      password: 'T1#sting'
+      nickname: 'tonipm_password_at_least_8_characters',
+      password: 'T1#stin'
     }
     if (apiReq === 'register') {
       user.password_confirmation = user.password

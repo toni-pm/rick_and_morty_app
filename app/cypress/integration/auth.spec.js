@@ -31,7 +31,7 @@ describe('Auth functions', () => {
 		password = 'Testing1234'
 		passwordConfirmation = 'Testing1234'
 		cy.register({ nickname, firstname, lastname, password, passwordConfirmation })
-		cy.get('.message').contains('Password must be between 16 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.')
+		cy.get('.message').contains('Password must be between 8 and 99 characters and contain at least: 1 number, 1 symbol, 1 capital letter and 1 lower letter.')
 	})
 
 	it('Register works and redirects to the main page', () => {
