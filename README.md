@@ -27,7 +27,7 @@ If it doesn't work, blame the [The Rick and Morty API](https://rickandmortyapi.c
 
 ## Dependencies
 
-Apart from the base libraries that were requested for the test, others have been added that are specified below.
+Apart from the base libraries that were requested, others have been added that are specified below.
 
 ### Backend
     
